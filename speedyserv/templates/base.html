@@ -20,7 +20,7 @@
         </div>
         <ul class="nav-links">
             <li>
-                <a href="#">
+                <a href="/">
                     <i class='bx bx-grid-alt'></i>
                     <span class="link_name">Dashboard</span>
                 </a>
@@ -30,7 +30,7 @@
             </li>
             <li>
                 <div class="iocn-link">
-                    <a href="#">
+                    <a href="/meals">
                         <i class='bx bx-bowl-hot'></i>
                         <span class="link_name">Meals</span>
                     </a>
@@ -42,7 +42,7 @@
                 </ul>
             </li>
             <li>
-                <a href="#">
+                <a href="/tables">
                     <i class='bx bx-circle'></i>
                     <span class="link_name">Tables</span>
                 </a>
@@ -56,7 +56,7 @@
                     <span class="link_name">Orders</span>
                 </a>
                 <ul class="sub-menu blank">
-                    <li><a class="link_name" href="/orders">Orders</a></li>
+                    <li><a class="link_name" href="#">Orders</a></li>
                 </ul>
             </li>
             <!-- <i class='bx bx-cog'></i> -->
@@ -74,8 +74,14 @@
             </li>
         </ul>
     </div>
+    <section class="home-section px-3">
+        <div class="home-content">
+            <i class='bx bx-menu'></i>
+    
+        </div>
     {% block content %}
     {% endblock %}
+    </section>
     <script>
 
         // *** navbar ***

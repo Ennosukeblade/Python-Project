@@ -1,12 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
-<section class="home-section px-3">
-    <div class="home-content">
-        <i class='bx bx-menu'></i>
-
-    </div>
     <div class="px-5">
-        <button type="button" class="btn btn-primary float-end mb-3">Add Category</button>
+        <button type="button" class="btn btn-primary float-end mb-3" onclick="window.location.href='/categories/new'">Add Category</button>
         <table class="table">
             <thead>
                 <tr>
@@ -17,27 +12,15 @@
                 </tr>
             </thead>
             <tbody>
+                {% for cat in categories %}
                 <tr>
-                    <th scope="row">1</th>
-                    <td>Food</td>
-                    <td> - </td>
-                    <td> - </td>
+                    <th scope="row">{{cat.id}}</th>
+                    <td>{{cat.name}}</td>
+                    <td>{{cat.created_at}}</td>
+                    <td>{{cat.updated_at}}</td>
                 </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Dessert</td>
-                    <td> - </td>
-                    <td> - </td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Fast Food</td>
-                    <td> - </td>
-                    <td> - </td>
-
-                </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>
-</section>
 {% endblock %}

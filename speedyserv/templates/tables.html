@@ -1,11 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
-<section class="home-section">
-    <div class="home-content">
-        <i class='bx bx-menu'></i>
-    </div>
+
     <div class="px-5">
-        <button type="button" class="btn btn-primary float-end mb-3">Add Table</button>
+        <button type="button" class="btn btn-primary float-end mb-3" onclick="window.location.href='/tables/new'">Add Table</button>
         <table class="table">
             <thead>
                 <tr>
@@ -38,5 +35,5 @@
             </tbody>
         </table>
     </div>
-</section>
+
 {% endblock %}

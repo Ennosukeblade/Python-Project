@@ -1,12 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
-<section class="home-section px-3">
-    <div class="home-content">
-        <i class='bx bx-menu'></i>
 
-    </div>
     <div class="px-5">
-        <button type="button" class="btn btn-primary float-end mb-3">Add Meal</button>
+        <button class="btn btn-primary float-end mb-3" onclick="window.location.href='/meals/new'">Add Meal</button>
         <table class="table">
             <thead>
                 <tr>
@@ -20,16 +16,18 @@
                 </tr>
             </thead>
             <tbody>
+                {% for meal in meals %}
                 <tr>
-                    <th scope="row">1</th>
-                    <td>Coucous</td>
-                    <td>15dt</td>
-                    <td>Cooked wheat with pepper and meat</td>
-                    <td>Food</td>
-                    <td> - </td>
-                    <td> - </td>
+                    <th scope="row">{{meal.id}}</th>
+                    <td>{{meal.name}}</td>
+                    <td>{{meal.price}}</td>
+                    <td>{{meal.description}}</td>
+                    <td>{{meal.category}}</td>
+                    <td>{{meal.created_at}}</td>
+                    <td>{{meal.updated_at}}</td>
                 </tr>
-                <tr>
+                {% endfor %}
+<!--                 <tr>
                     <th scope="row">2</th>
                     <td>Kafteji</td>
                     <td>5dt</td>
@@ -56,9 +54,9 @@
                     <td>Food</td>
                     <td> - </td>
                     <td> - </td>
-                </tr>
+                </tr> -->
             </tbody>
         </table>
     </div>
-</section>
+
 {% endblock %}

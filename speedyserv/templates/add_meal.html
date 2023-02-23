@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="text-center">Add Meal</h2>
+<div class="d-flex flex-column align-items-center">
+    <form class="w-50">
+        <div class="mb-3">
+            <label for="meal_name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="meal_name">
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <label for="meal_price" class="form-label">Price</label>
+                <input type="number" class="form-control" id="meal_price">
+            </div>
+            <div class="col">
+                <label for="meal_category" class="form-label">Category</label>
+                <select class="form-select" aria-label="Default select example">
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="meal_description" class="form-label">Description</label>
+            <textarea id="meal_description" cols="30" rows="10" class="form-control"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary float-end">Submit</button>
+    </form>
+</div>
+
+{% endblock %}
