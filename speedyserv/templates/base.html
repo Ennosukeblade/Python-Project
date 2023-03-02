@@ -66,10 +66,13 @@
                         <!--<img src="image/profile.jpg" alt="profileImg">-->
                     </div>
                     <div class="name-job">
-                        <div class="profile_name">Prem Shahi</div>
-                        <div class="job">Web Desginer</div>
+                        <div class="profile_name">{{session['user_name']}}</div>
+                        <div class="job">Admin</div>
                     </div>
-                    <i class='bx bx-log-out'></i>
+                    <a href="/admin/logout">
+                        <i class='bx bx-log-out'></i>
+                    </a>
+                    
                 </div>
             </li>
         </ul>

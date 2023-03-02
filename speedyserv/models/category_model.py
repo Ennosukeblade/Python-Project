@@ -1,7 +1,7 @@
 from speedyserv.config.mysqlconnection import connectToMySQL
 from speedyserv import DB
 
-#from speedyserv.models import meal_model
+from speedyserv.models import meal_model
 
 class Category:
     def __init__(self, data):
@@ -9,6 +9,7 @@ class Category:
         self.name = data['name']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
+        self.meals = []
 
     @classmethod
     def add_category(cls, data):
@@ -35,30 +36,55 @@ class Category:
         result =  connectToMySQL(DB).query_db(query, data)
         return cls(result[0])
     
+    @classmethod
+    def get_category_with_meals(cls, data):
+        query = """
+                SELECT * FROM categories
+                LEFT JOIN meals ON categories.id = meals.category_id
+                WHERE categories.id = %(id)s
+                """
+        result = connectToMySQL(DB).query_db(query, data)
+        category = cls(result[0])
+        for row in result:
+            data = {
+                'id': row['meals.id'],
+                'name': row['meals.name'],
+                'description': row['description'],
+                'created_at': row['meals.created_at'],
+                'updated_at': row['meals.updated_at'],
+                'category_id': row['category_id'],
+                'price': row['price'],
+                'image': row['image']
+                }
+            category.meals.append(meal_model.Meal(data))
+
+        return category
+
+
     # @classmethod
     # def get_categories_with_meals(cls):
     #     query= """
     #             SELECT * FROM categories
-    #             RIGHT JOIN meals ON categories.id = meals.category_id
+    #             LEFT JOIN meals ON categories.id = meals.category_id
     #             """
     #     result =  connectToMySQL(DB).query_db(query)
-    #     all_categories = []
-    #     for cat in result:
-    #         all_categories.append(cls(cat))
-    #     for row in result:
-    #         meal = {
-    #             'id': row['meals.id'],
-    #             'name': row['meals.name'],
-    #             'description': row['description'],
-    #             'created_at': row['meals.created_at'],
-    #             'updated_at': row['meals.updated_at'],
-    #             'category_id': row['category_id'],
-    #             'price': row['price']
-    #         }
-
-    #         cls.meals.append(meal_model.Meal(meal))
-    #         print
+    #     print(result)
+    #     # all_categories = []
+    #     # for cat in result:
+    #     #     all_categories.append(cls(cat))
+    #     # for row in result:
+    #     #     meal = {
+    #     #         'id': row['meals.id'],
+    #     #         'name': row['meals.name'],
+    #     #         'description': row['description'],
+    #     #         'created_at': row['meals.created_at'],
+    #     #         'updated_at': row['meals.updated_at'],
+    #     #         'category_id': row['category_id'],
+    #     #         'price': row['price']
+    #     #     }
+    #     #     all_categories.
+    #         #cls.meals.append(meal_model.Meal(meal))
         
-    #     return all_categories
+    #     return "ok"
 
 
