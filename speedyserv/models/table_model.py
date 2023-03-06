@@ -1,10 +1,13 @@
 from speedyserv.config.mysqlconnection import connectToMySQL
 from speedyserv import DB
 
+from speedyserv.models import meal_model
+
 class Table:
     def __init__(self, data):
         self.id = data['id']
         self.status = data['status'] or 0
+        self.stage = data['stage'] or 0
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
         self.meals = []
@@ -53,8 +56,47 @@ class Table:
         result =  connectToMySQL(DB).query_db(query, data)
         table = cls(result[0])
         for row in result:
-            meals
-
+            data = {
+                **row,
+                'id': row['meals.id'],
+                'created_at': row['meals.created_at'],
+                'updated_at': row['meals.updated_at']
+            }
+            print(f"hhhhhhhhhhhhhhhhhhhhh{data}")
+            table.meals.append(meal_model.Meal(data))
 
         print(result)
-        return []
+        return table
+    
+    @classmethod
+    def update_table_stage(cls, data):
+        query = """
+                UPDATE tables SET
+                stage = %(stage)s
+                WHERE id = %(id)s;
+                """
+        return connectToMySQL(DB).query_db(query, data)
+    
+    @classmethod
+    def get_orders(cls):
+        query = """
+                SELECT * FROM tables
+                JOIN orders ON tables.id = orders.table_id
+                JOIN meals ON meals.id = orders.meal_id
+                """
+        result =  connectToMySQL(DB).query_db(query)
+        for table in result:
+            tables = cls(table)
+        #orders = cls(result[0])
+        for row in result:
+            data = {
+                **row,
+                'id': row['meals.id'],
+                'created_at': row['meals.created_at'],
+                'updated_at': row['meals.updated_at']
+            }
+            # print(f"hhhhhhhhhhhhhhhhhhhhh{data}")
+            tables.meals.append(meal_model.Meal(data))           
+
+        print(result)
+        return tables

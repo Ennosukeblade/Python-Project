@@ -7,7 +7,7 @@
         <input type="hidden" name="id" value={{meal.id}}>
         <div class="mb-3">
             <label for="meal_name" class="form-label">Name</label>
-            <input type="text" class="form-control" id="meal_name" name="name" value={{meal.name}}>
+            <input type="text" class="form-control" id="meal_name" name="name" value="{{meal.name}}">
             {% for message in get_flashed_messages(category_filter=["name"]) %}
             <p class="text-danger">{{message}}</p>
             {% endfor %}
@@ -47,7 +47,8 @@
             <input type=submit value=Upload>
         </div> -->
         <div class="input-group mb-3">
-            <input type="file" class="form-control" id="inputFile" name="file" value="{{ url_for('static', filename='img/uploads/{{meal.image}}') }}">
+            {# value="{{ url_for('static', filename='img/uploads/{{meal.image}}') }}" #}
+            <input type="file" class="form-control" id="inputFile" name="file">
             <label class="input-group-text" for="inputFile">Upload a photo</label>
           </div>
         <button type="submit" class="btn btn-primary float-end">Submit</button>

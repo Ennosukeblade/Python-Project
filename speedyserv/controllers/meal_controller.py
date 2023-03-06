@@ -36,16 +36,18 @@ def add_meal():
     file = request.files['file']
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
-        file.save(os.path.join(UPLOAD_FOLDER, filename))
+        # image with spaces in its name isn't grabed from database
+        str_without_spaces = filename.replace(' ', '-')
+        file.save(os.path.join(UPLOAD_FOLDER, str_without_spaces))
     data = {
                 **request.form,
-                'image': file.filename
+                'image': str_without_spaces
             }
     meal_model.Meal.add_meal(data)
     return redirect("/meals")
 
 @app.route('/meals/<int:id>/delete')
-def delete_show(id):
+def delete_meal(id):
     if 'user_id' not in session:
         return redirect('/signin')
     meal_model.Meal.delete_meal({'id':id})
@@ -68,9 +70,10 @@ def update_meal():
     file = request.files['file']
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
-        file.save(os.path.join(UPLOAD_FOLDER, filename))
+        str_without_spaces = filename.replace(' ', '-')
+        file.save(os.path.join(UPLOAD_FOLDER, str_without_spaces))
     data = { **request.form,
-            'image': file.filename
+            'image': str_without_spaces
             }
     meal_model.Meal.update_meal(data)
     return redirect("/meals")

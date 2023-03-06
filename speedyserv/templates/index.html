@@ -1,28 +1,54 @@
 {% extends "base.html" %}
 {% block content %}
 
-    <div class="row px-5">
-        <div class="col-4 d-flex flex-column gap-3">
-            <h3 class="text-center">Pending</h3>
-            <button class="btn btn-lg btn-outline-secondary" onclick="window.location.href='/tables/order'">Table 1</button>
-            <button class="btn btn-lg btn-outline-secondary">Table 3</button>
-            <button class="btn btn-lg btn-outline-secondary">Table 5</button>
-            <button class="btn btn-lg btn-outline-secondary">Table 6</button>
-        </div>
-        <div class="col-4 d-flex flex-column gap-3">
-            <h3 class="text-center">In Progress</h3>
-            <button class="btn btn-lg btn-outline-secondary">Table 4</button>
-            <button class="btn btn-lg btn-outline-secondary">Table 7</button>
-        </div>
-        <div class="col-4 d-flex flex-column gap-3">
-            <h3 class="text-center">Ready</h3>
-            <button class="btn btn-lg btn-outline-secondary">Table 2</button>
-
-
+<div class="row m-1">
+    <div class="col-md-4 d-flex flex-wrap">
+        <div class="col-md-12 pending p-3">
+            <h3 class="w-100 mb-4">Pending</h3>
+            <div class="square-grid">
+                {% for table in tables %}
+                {% if table.stage == 1 %}
+                <button class="btn btn-lg btn-outline-dark square"
+                    onclick="window.location.href='/tables/order/{{table.id}}'">Table {{table.id}}</button>
+                {% endif %}
+                {% endfor %}
+            </div>
         </div>
 
-        <!--  <div class="move" id="seat"> -->
-<!--         <div class="col-6">
+    </div>
+    <div class="col-md-4 d-flex flex-wrap">
+        <div class="col-md-12 in-progress p-3">
+            <h3 class="w-100 mb-4">In Progress</h3>
+            <div class="square-grid">
+                {% for table in tables %}
+                {% if table.stage == 2 %}
+                <button class="btn btn-lg btn-outline-dark square"
+                    onclick="window.location.href='/tables/order/{{table.id}}'">Table
+                    {{table.id}}</button>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-4 d-flex flex-wrap">
+        <div class="col-md-12 ready p-3">
+            <h3 class="w-100 mb-4">Ready</h3>
+            <div class="square-grid">
+                {% for table in tables %}
+                {% if table.stage == 3 %}
+                <button class="btn btn-lg btn-outline-dark square"
+                    onclick="window.location.href='/tables/order/{{table.id}}'">Table {{table.id}}</button>
+                {% endif %}
+                {% endfor %}
+            </div>
+
+        </div>
+
+    </div>
+
+    <!--  <div class="move" id="seat"> -->
+    <!--         <div class="col-6">
             <div id="image-container">
                 <img src="{{ url_for('static', filename='img/2053202-200.png') }}" alt="" class="draggable">
                 <img src="{{ url_for('static', filename='img/2053202-200.png') }}" alt="" class="draggable">
@@ -32,6 +58,6 @@
         </div> -->
 
 
-    </div>
+</div>
 
 {% endblock %}

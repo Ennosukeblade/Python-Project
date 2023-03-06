@@ -59,7 +59,8 @@
                     <button class="btn btn-primary">Register</button>
                 </form>
             </div>
-            <div class="col-4 p-4 border border-1 rounded-3 shadow bg-white">
+            <div class="col-4">
+                <div class="p-4 border border-1 rounded-3 shadow bg-white mb-4">
                 <h2 class="text-center">Login</h2>
                 <form action="/login" method="post">
                     <div class="mb-3">
@@ -78,17 +79,19 @@
                     </div>
                     <button class="btn btn-primary">Login</button>
                 </form>
+                </div>
+                <div class="mt-3 d-flex flex-wrap justify-content-center gap-3">
+                    {% for table in tables %}
+                    <form action="/session" method="post">
+                        <input type="hidden" name="id" value={{table.id}}>
+                        <button class="btn btn-warning">Table {{table.id}}</a>
+                    </form>
+                    {% endfor %}
+                </div>
             </div>
+
         </div>
-        <div class="mt-3 d-flex flex-wrap justify-content-center gap-5">
-            <a href="/menu">Go to menu</a>
-            {% for table in tables %}
-            <form action="/session" method="post">
-                <input type="hidden" name="id" value={{table.id}}>
-                <button class="btn btn-warning">Table {{table.id}}</a>
-            </form>
-            {% endfor %}
-        </div>
+
 
     </div>
 </body>

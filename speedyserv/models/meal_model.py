@@ -16,6 +16,7 @@ class Meal:
         self.category = category_model.Category.get_category_by_id({'id': self.category_id}).name
         self.image = data['image']
 
+
     @classmethod
     def get_all_meals(cls):
         query= """
@@ -27,11 +28,13 @@ class Meal:
             all_meals.append(cls(meal))
         return all_meals
     
+
     @classmethod
     def delete_meal(cls, data):
         query = "DELETE FROM meals WHERE id = %(id)s;"
         return connectToMySQL(DB).query_db(query, data)
     
+
     @classmethod
     def add_meal(cls, data):
         query = """
@@ -40,6 +43,7 @@ class Meal:
                 """
         return connectToMySQL(DB).query_db(query, data)
     
+
     @classmethod
     def update_meal(cls, data):
         query = """
@@ -53,15 +57,31 @@ class Meal:
                 """
         return connectToMySQL(DB).query_db(query, data)
     
+
     @classmethod
     def get_meal_by_id(cls, data):
-        query = "SELECT * FROM meals WHERE id = %(id)s;"
+        query = "SELECT * FROM meals WHERE id = %(id)s"
         result = connectToMySQL(DB).query_db(query, data)
         print(f"meal by id: {result}")
         if len(result)<1:
             return False
         return cls(result[0])
-        
+    
+
+    @classmethod
+    def get_ordered_meals(cls, data):
+        query = """
+            SELECT * FROM meals 
+            JOIN orders ON meals.id = orders.meal_id 
+            WHERE orders.table_id = %(table_id)s;
+       """ 
+        result =  connectToMySQL(DB).query_db(query,data)
+        ordered_meals = []
+        for meal in result:
+            ordered_meals.append(cls(meal))
+        return ordered_meals
+    
+
     @staticmethod
     def validate_meal(data):
         is_valid = True

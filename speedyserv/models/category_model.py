@@ -34,6 +34,7 @@ class Category:
                 WHERE id = %(id)s
                 """
         result =  connectToMySQL(DB).query_db(query, data)
+        print(result)
         return cls(result[0])
     
     @classmethod

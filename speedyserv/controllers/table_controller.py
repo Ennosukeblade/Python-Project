@@ -2,19 +2,20 @@ from speedyserv import app
 from flask import render_template, session, redirect, request
 
 from speedyserv.models import table_model
+from speedyserv.models import meal_model
 
 @app.route('/')
 def dashboard():
     if 'user_id' not in session:
         return redirect('/signin')
-    return render_template("index.html")
+    tables = table_model.Table.get_all_tables()
+    return render_template("index.html", tables = tables)
 
 @app.route('/tables')
 def tables():
     if 'user_id' not in session:
         return redirect('/signin')
     tables = table_model.Table.get_all_tables()
-    table_model.Table.get_meals_with_table_id({'id':1})
     return render_template("tables.html", tables = tables)
 
 @app.route('/tables/new')
@@ -29,8 +30,22 @@ def add_table():
     table_model.Table.add_table(data)
     return redirect('/tables')
 
-@app.route('/tables/order')
-def table_order():
+@app.route('/tables/order/<int:table_id>')
+def table_order(table_id):
     if 'user_id' not in session:
         return redirect('/signin')
-    return render_template("table_order.html")
+    # ordered_meals = meal_model.Meal.get_ordered_meals({'table_id':table_id})
+    # for meal in ordered_meals:
+    #     print(meal.name,"\n")
+    table_order = table_model.Table.get_meals_with_table_id({'id':table_id})
+
+    return render_template("table_meals.html", table_order = table_order)
+
+@app.route('/tables/change/stage', methods=['POST'])
+def change_table_stage():
+    print(request.form)
+    data = request.form
+
+    print(str(data))
+    table_model.Table.update_table_stage(data)
+    return redirect('/')
